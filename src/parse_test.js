@@ -5,7 +5,16 @@ const csv = require('fast-csv');
 let issues = 0;
 let refreshes = 0;
 
-function updateCount(event) {
+interface Data {
+    issues: number;
+    refreshes: number;
+}
+
+interface Props {
+ data: Data;   
+}
+
+function updateCount(event, data) {
     if (event === "IssueVanilla") {
         issues++;
     } else {
@@ -14,6 +23,7 @@ function updateCount(event) {
     }
 }
 
+function 
 fs.createReadStream(path.resolve(__dirname, 'data.csv'))
     .pipe(csv.parse({ headers: [undefined, undefined, undefined, undefined, undefined, 'instruction_name', undefined, undefined, undefined, undefined, undefined, undefined, undefined, ] }))
     .on('error', (error) => console.error(error))
