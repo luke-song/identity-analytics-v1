@@ -1,20 +1,13 @@
-const fs = require('fs');
-const path = require('path');
-const csv = require('fast-csv');
+import * as fs from 'fs';
+import * as path from 'path';
+import * as csv from 'fast-csv';
 
-let issues = 0;
-let refreshes = 0;
 
-interface Data {
-    issues: number;
-    refreshes: number;
-}
 
-interface Props {
- data: Data;   
-}
+let issues = 0 as number;
+let refreshes = 0 as number;
 
-function updateCount(event, data) {
+function updateCount(event: any) {
     if (event === "IssueVanilla") {
         issues++;
     } else {
@@ -23,10 +16,9 @@ function updateCount(event, data) {
     }
 }
 
-function 
 fs.createReadStream(path.resolve(__dirname, 'data.csv'))
     .pipe(csv.parse({ headers: [undefined, undefined, undefined, undefined, undefined, 'instruction_name', undefined, undefined, undefined, undefined, undefined, undefined, undefined, ] }))
     .on('error', (error) => console.error(error))
     .on('data', (row) => updateCount(row.instruction_name))
-    .on('end', (rowCount) => console.log(`Parsed ${rowCount} rows\nGate Passes Issued: `, issues, "\nGate Passes Refreshed: ", refreshes));
+    .on('end', (rowCount: number) => console.log(`Parsed ${rowCount} rows\nGate Passes Issued: `, issues, "\nGate Passes Refreshed: ", refreshes));
 
